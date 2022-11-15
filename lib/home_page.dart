@@ -41,11 +41,13 @@ class _HomePageState extends State<HomePage> {
       lon = position!.longitude;
     });
     print("lattitude: $lat \ Longtitude: $lon");
-    // gettingData();
+    gettingData();
   }
 
   var lat;
   var lon;
+  Map<String, dynamic>? weatherMap;
+  Map<String, dynamic>? forecastMap;
 
   gettingData() async {
     String weatherLink =
@@ -53,26 +55,28 @@ class _HomePageState extends State<HomePage> {
     var weatherResponse = await http.get(Uri.parse(weatherLink));
     // print(weatherResponse.body);
     String forecastLink =
-        "https://api.openweathermap.org/data/2.5/forecast?lat=37.4219983&lon=-122.084&units=metric&appid=f92bf340ade13c087f6334ed434f9761";
+        "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&units=metric&appid=f92bf340ade13c087f6334ed434f9761";
     var forecastResponse = await http.get(Uri.parse(forecastLink));
     // print(forecastResponse.body);
-    var weatherMap =
-        Map<String, dynamic>.from(jsonDecode(weatherResponse.body));
-    var forecastMap =
-        Map<String, dynamic>.from(jsonDecode(forecastResponse.body));
+    weatherMap = Map<String, dynamic>.from(jsonDecode(weatherResponse.body));
+    forecastMap = Map<String, dynamic>.from(jsonDecode(forecastResponse.body));
     // print(forecastMap);
+    setState(() {});
+    print(weatherMap);
   }
 
-  @override
   void initState() {
     determinePosition();
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    gettingData();
-    return SafeArea(child: Scaffold());
+    // gettingData();
+    return SafeArea(
+        child: Scaffold(
+            body:
+
+        ));
   }
 }
