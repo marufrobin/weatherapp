@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -38,10 +41,27 @@ class _HomePageState extends State<HomePage> {
       lon = position!.longitude;
     });
     print("lattitude: $lat \ Longtitude: $lon");
+    // gettingData();
   }
 
   var lat;
   var lon;
+
+  gettingData() async {
+    String weatherLink =
+        "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=f92bf340ade13c087f6334ed434f9761";
+    var weatherResponse = await http.get(Uri.parse(weatherLink));
+    // print(weatherResponse.body);
+    String forecastLink =
+        "https://api.openweathermap.org/data/2.5/forecast?lat=37.4219983&lon=-122.084&units=metric&appid=f92bf340ade13c087f6334ed434f9761";
+    var forecastResponse = await http.get(Uri.parse(forecastLink));
+    // print(forecastResponse.body);
+    var weatherMap =
+        Map<String, dynamic>.from(jsonDecode(weatherResponse.body));
+    var forecastMap =
+        Map<String, dynamic>.from(jsonDecode(forecastResponse.body));
+    // print(forecastMap);
+  }
 
   @override
   void initState() {
@@ -52,6 +72,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    gettingData();
     return SafeArea(child: Scaffold());
   }
 }
