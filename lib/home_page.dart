@@ -75,6 +75,7 @@ class _HomePageState extends State<HomePage> {
     // gettingData();
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Image.asset("assets/b.png").color,
         body: Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -89,9 +90,52 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(height: 250, child: buildweather()),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.01,
+                height: MediaQuery.of(context).size.height * 0.078,
               ),
-              Image.asset("assets/h.png")
+              Stack(children: [
+                Image.asset("assets/h.png"),
+                Positioned(
+                  right: 0,
+                  left: 0,
+                  top: 120,
+                  bottom: -40,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 50, horizontal: 6),
+                    height: 325,
+                    // width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(44),
+                            topRight: Radius.circular(44)),
+                        image: DecorationImage(
+                            image: AssetImage('assets/r.png'),
+                            fit: BoxFit.cover)),
+                    child: Container(
+                      // margin: EdgeInsets.all(16),
+                      // color: Colors.pink,
+                      // height: 200,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 6,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(bottom: 30, left: 10),
+                            // height: 180,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: Colors.cyan,
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Column(
+                              children: [],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
             ],
           ),
         ),
@@ -101,23 +145,20 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildweather() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
           "${weatherMap!['name']}",
           style: TextStyle(
-              fontSize: 30,
+              fontSize: 34,
               fontWeight: FontWeight.w400,
               color: Colors.white,
               fontFamily: "SE"),
         ),
-        SizedBox(
-          height: 0,
-        ),
         Text(
           "${weatherMap!['main']["temp"].toString().substring(0, 2)}°",
           style: TextStyle(
-              fontSize: 90,
+              fontSize: 96,
               fontWeight: FontWeight.w200,
               color: Colors.white,
               fontFamily: "SEThin"),
@@ -125,7 +166,7 @@ class _HomePageState extends State<HomePage> {
         Text(
           "${weatherMap!['weather'][0]["description"]}",
           style: TextStyle(
-              fontSize: 30,
+              fontSize: 34,
               fontWeight: FontWeight.w400,
               color: Color(0xffEBEBF5).withOpacity(0.6),
               fontFamily: "SE"),
