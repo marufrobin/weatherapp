@@ -51,11 +51,11 @@ class _HomePageState extends State<HomePage> {
 
   gettingData() async {
     String weatherLink =
-        "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=f92bf340ade13c087f6334ed434f9761";
+        "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=175cf6ab4459aa37983a566b55f6167f";
     var weatherResponse = await http.get(Uri.parse(weatherLink));
     // print(weatherResponse.body);
     String forecastLink =
-        "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&units=metric&appid=f92bf340ade13c087f6334ed434f9761";
+        "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$lon&units=metric&appid=175cf6ab4459aa37983a566b55f6167f";
     var forecastResponse = await http.get(Uri.parse(forecastLink));
     // print(forecastResponse.body);
     weatherMap = Map<String, dynamic>.from(jsonDecode(weatherResponse.body));
