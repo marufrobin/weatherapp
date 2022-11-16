@@ -82,20 +82,71 @@ class _HomePageState extends State<HomePage> {
                 image: AssetImage("assets/b.png"), fit: BoxFit.cover),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                "${weatherMap!['name']}",
-                style: TextStyle(
-                    fontSize: 50, color: Colors.white, fontFamily: "SE"),
-              ),
               SizedBox(
-                height: 10,
+                height: MediaQuery.of(context).size.height * 0.06,
               ),
+              Container(height: 250, child: buildweather()),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.01,
+              ),
+              Image.asset("assets/h.png")
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildweather() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text(
+          "${weatherMap!['name']}",
+          style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+              fontFamily: "SE"),
+        ),
+        SizedBox(
+          height: 0,
+        ),
+        Text(
+          "${weatherMap!['main']["temp"].toString().substring(0, 2)}°",
+          style: TextStyle(
+              fontSize: 90,
+              fontWeight: FontWeight.w200,
+              color: Colors.white,
+              fontFamily: "SEThin"),
+        ),
+        Text(
+          "${weatherMap!['weather'][0]["description"]}",
+          style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.w400,
+              color: Color(0xffEBEBF5).withOpacity(0.6),
+              fontFamily: "SE"),
+        ),
+        Text(
+          "Feels Like: ${weatherMap!['main']["feels_like"].toString().substring(0, 2)}°",
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+              fontFamily: "SE"),
+        ),
+        Text(
+          "H: ${weatherMap!['main']["temp_max"].toString().substring(0, 2)}°  L: ${weatherMap!['main']["temp_min"].toString().substring(0, 2)}°",
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+              fontFamily: "SE"),
+        ),
+      ],
     );
   }
 }
