@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:jiffy/jiffy.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -111,27 +112,56 @@ class _HomePageState extends State<HomePage> {
                         image: DecorationImage(
                             image: AssetImage('assets/r.png'),
                             fit: BoxFit.cover)),
-                    child: Container(
-                      // margin: EdgeInsets.all(16),
-                      // color: Colors.pink,
-                      // height: 200,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 6,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 30, left: 10),
-                            // height: 180,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: Colors.cyan,
-                                borderRadius: BorderRadius.circular(30)),
-                            child: Column(
-                              children: [],
-                            ),
-                          );
-                        },
-                      ),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: forecastMap!['cnt'],
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 30, left: 10),
+                          padding: EdgeInsets.all(6),
+                          // height: 180,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: Color(0xff5936B4),
+                              borderRadius: BorderRadius.circular(60)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "${Jiffy([
+                                      forecastMap!['list'][0]['dt']
+                                    ]).format("h:mm a")}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontFamily: 'SE',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Image.network(
+                                  "https://openweathermap.org/img/wn/${forecastMap!['list'][index]['weather'][0]['icon']}@2x.png"),
+                              Text(
+                                "${forecastMap!['list'][index]['weather'][0]['description']}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontFamily: 'SE',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                "H: ${forecastMap!['list'][index]['main']['temp_max'].toString().substring(0, 2)}° \n L: ${forecastMap!['list'][index]['main']['temp_min'].toString().substring(0, 2)}°",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontFamily: 'SE',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
