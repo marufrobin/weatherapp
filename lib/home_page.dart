@@ -74,9 +74,28 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // gettingData();
     return SafeArea(
-        child: Scaffold(
-            body:
-
-        ));
+      child: Scaffold(
+        body: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/b.png"), fit: BoxFit.cover),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "${weatherMap!['name']}",
+                style: TextStyle(
+                    fontSize: 50, color: Colors.white, fontFamily: "SE"),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
