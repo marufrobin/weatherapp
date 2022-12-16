@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.transparent,
                         child: Container(
                           padding:
-                              EdgeInsets.symmetric(vertical: 30, horizontal: 4),
+                              EdgeInsets.symmetric(vertical: 40, horizontal: 4),
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: forecastMap!['cnt'],
@@ -165,6 +165,17 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
+                    Positioned(
+                      top: MediaQuery.of(context).size.height * 0.16,
+                      right: MediaQuery.of(context).size.width * 0.36,
+                      child: Container(
+                        height: 10,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.26),
+                            borderRadius: BorderRadius.circular(16)),
+                      ),
+                    )
                   ]),
                 ],
               ),
