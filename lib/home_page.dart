@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -74,50 +75,42 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // gettingData();
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Image.asset("assets/b.png").color,
-        body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/b.png"), fit: BoxFit.cover),
-          ),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.06,
-              ),
-              Container(height: 250, child: buildweather()),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.078,
-              ),
-              Stack(children: [
-                Image.asset("assets/h.png"),
-                Positioned(
-                  right: 0,
-                  left: 0,
-                  top: 120,
-                  bottom: -40,
+    return Scaffold(
+      backgroundColor: Image.asset("assets/b.png").color,
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/b.png"), fit: BoxFit.cover),
+        ),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.06,
+            ),
+            Container(height: 250, child: buildweather()),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.080,
+            ),
+            Stack(children: [
+              Image.asset("assets/h.png"),
+              Positioned(
+                right: 0,
+                left: 0,
+                top: 120,
+                bottom: -40,
+                child: BlurryContainer(
+                  blur: 5,
+                  color: Colors.transparent,
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 50, horizontal: 6),
-                    height: 325,
-                    // width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(44),
-                            topRight: Radius.circular(44)),
-                        image: DecorationImage(
-                            image: AssetImage('assets/r.png'),
-                            fit: BoxFit.cover)),
+                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: 4),
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: forecastMap!['cnt'],
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: EdgeInsets.only(bottom: 30, left: 10),
+                          margin: EdgeInsets.only(left: 10),
                           padding: EdgeInsets.all(6),
                           // height: 180,
                           width: 80,
@@ -165,9 +158,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-              ]),
-            ],
-          ),
+              ),
+            ]),
+          ],
         ),
       ),
     );
