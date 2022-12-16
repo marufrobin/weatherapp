@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:jiffy/jiffy.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -74,7 +75,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // gettingData();
     return Scaffold(
       backgroundColor: Image.asset("assets/b.png").color,
       body: Container(
@@ -83,85 +83,91 @@ class _HomePageState extends State<HomePage> {
           image: DecorationImage(
               image: AssetImage("assets/b.png"), fit: BoxFit.cover),
         ),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.06,
-            ),
-            Container(height: 250, child: buildweather()),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.080,
-            ),
-            Stack(children: [
-              Image.asset("assets/h.png"),
-              Positioned(
-                right: 0,
-                left: 0,
-                top: 120,
-                bottom: -40,
-                child: BlurryContainer(
-                  blur: 5,
-                  color: Colors.transparent,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 30, horizontal: 4),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: forecastMap!['cnt'],
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(left: 10),
-                          padding: EdgeInsets.all(6),
-                          // height: 180,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              color: Color(0xff5936B4),
-                              borderRadius: BorderRadius.circular(60)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "${Jiffy([
-                                      forecastMap!['list'][0]['dt']
-                                    ]).format("h:mm a")}",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontFamily: 'SE',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Image.network(
-                                  "https://openweathermap.org/img/wn/${forecastMap!['list'][index]['weather'][0]['icon']}@2x.png"),
-                              Text(
-                                "${forecastMap!['list'][index]['weather'][0]['description']}",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontFamily: 'SE',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              Text(
-                                "H: ${forecastMap!['list'][index]['main']['temp_max'].toString().substring(0, 2)}° \n L: ${forecastMap!['list'][index]['main']['temp_min'].toString().substring(0, 2)}°",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontFamily: 'SE',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+        child: weatherMap == null && forecastMap == null
+            ? Center(
+                child: LoadingAnimationWidget.threeArchedCircle(
+                    color: Colors.white, size: 40),
+              )
+            : Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.06,
                   ),
-                ),
+                  Container(height: 250, child: buildweather()),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.080,
+                  ),
+                  Stack(children: [
+                    Image.asset("assets/h.png"),
+                    Positioned(
+                      right: 0,
+                      left: 0,
+                      top: 120,
+                      bottom: -40,
+                      child: BlurryContainer(
+                        blur: 5,
+                        color: Colors.transparent,
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 30, horizontal: 4),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: forecastMap!['cnt'],
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: EdgeInsets.only(left: 10),
+                                padding: EdgeInsets.all(6),
+                                // height: 180,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff5936B4),
+                                    borderRadius: BorderRadius.circular(60)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "${Jiffy([
+                                            forecastMap!['list'][0]['dt']
+                                          ]).format("h:mm a")}",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        fontFamily: 'SE',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Image.network(
+                                        "https://openweathermap.org/img/wn/${forecastMap!['list'][index]['weather'][0]['icon']}@2x.png"),
+                                    Text(
+                                      "${forecastMap!['list'][index]['weather'][0]['description']}",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        fontFamily: 'SE',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      "H: ${forecastMap!['list'][index]['main']['temp_max'].toString().substring(0, 2)}° \n L: ${forecastMap!['list'][index]['main']['temp_min'].toString().substring(0, 2)}°",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        fontFamily: 'SE',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]),
+                ],
               ),
-            ]),
-          ],
-        ),
       ),
     );
   }
